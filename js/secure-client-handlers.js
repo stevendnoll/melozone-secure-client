@@ -54,10 +54,6 @@ const handleEncryptedDataWorkerResponse = (sc = null, data = {}, status = 200, m
         encryptedMessage,
         pow,
     } = data;
-    console.log(status);
-    console.log(message);
-    console.log(data);
-    console.log('========');
     const {
         difficulty,
         hash,
