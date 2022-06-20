@@ -1,6 +1,10 @@
+Please note, the following license does not apply to the contents of the `ext/` folder. Please refer to the license file contained within the `ext/` folder to learn more.
+
+# License
+
 MIT License
 
-Copyright (c) 2022 Steve
+Copyright (c) 2022 Steven D. Noll
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

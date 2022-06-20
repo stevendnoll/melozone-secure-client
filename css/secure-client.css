@@ -1,0 +1,194 @@
+html, body {
+    background-color: #2a2a2a;
+    color: #fff;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.secure-client-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.secure-client-root a {
+    color: #fff;
+}
+
+.secure-client-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 0.75em;
+    margin: 0;
+    background-color: #5a5a5a;
+    min-width: calc(100% - 1.5em);
+}
+
+.secure-client-header-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.secure-client-header-menu .menu-link {
+    padding: 0.75em 1.5em;
+    font-size: 1.1em;
+    background-color: #3f3f3f;
+    margin: 0.5em 0.1em 0 0.1em;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    min-width: 3em;
+    text-align: center;
+    text-decoration: none;
+    border-top: 1px solid #3a3a3a;
+    border-left: 1px solid #3a3a3a;
+    border-right: 1px solid #3a3a3a;
+}
+
+.secure-client-header-menu .menu-link:hover {
+    background-color: #4a4a4a;
+    text-decoration: underline;
+    border-top: 1px solid #404040;
+    border-left: 1px solid #404040;
+    border-right: 1px solid #404040;
+}
+
+.secure-client-header-menu .menu-link.link-selected {
+    color: lightgreen;
+    background-color: #6f6f6f;
+    border-top: 1px solid #606060;
+    border-left: 1px solid #606060;
+    border-right: 1px solid #606060;
+}
+
+.secure-client-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5em;
+    margin-bottom: 8em;
+    min-width: calc(100% - 5.25em);
+}
+
+.secure-client-body .secure-form {
+    min-width: 100%;
+}
+
+.secure-client-body .form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 100%;
+}
+
+.secure-client-body .form-row .form-cell {
+    margin-right: 1em;
+}
+
+.secure-client-body .form-row .form-cell label {
+    padding: 1em 0.33em;
+}
+
+.secure-client-body .form-row .form-cell label:hover {
+    cursor: pointer;
+}
+
+.secure-client-body .form-row .form-cell .radio-field:hover {
+    cursor: pointer;
+}
+
+.secure-client-body .submit-button {
+    border: none;
+    border-radius: 0.25em;
+    font-size: 1em;
+    padding: 0.75em 1.25em;
+    background-color: green;
+    color: #fff;
+}
+
+.secure-client-body .submit-button:hover {
+    cursor: pointer;
+    background-color: darkgreen;
+}
+
+.secure-client-body .submit-button:disabled {
+    cursor: not-allowed;
+    background-color: gray;
+}
+
+.secure-client-body h1 {
+    margin: 0;
+}
+
+.secure-client-body .highlight-text {
+    color: orange;
+}
+
+.secure-client-body .input-field {
+    min-width: 50%;
+    font-size: 1em;
+    line-height: 1.6em;
+    border-radius: 0.25em;
+}
+
+.secure-client-body .textarea-field {
+    min-width: 100%;
+    min-height: 8em;
+    font-size: 1em;
+    line-height: 1.6em;
+    border-radius: 0.25em;
+}
+
+.secure-client-body .textarea-field.hide-text {
+    color: transparent;
+    text-shadow: 0 0 8px rgba(0,0,0,1);
+}
+
+.secure-client-body .decrypted-text,
+.secure-client-body .encrypted-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1em;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25em;
+    word-wrap: break-word;
+    word-break: normal;
+    min-width: 90%;
+}
+
+.secure-client-body .decrypted-text pre,
+.secure-client-body .encrypted-text pre {
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.secure-client-body .required {
+    color: red;
+    font-size: 0.8em;
+}
+
+@media screen and (min-width: 300px) {
+    .secure-client-header-menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
