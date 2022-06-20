@@ -145,7 +145,6 @@ const decryptData = (cmd = '', data = {}) => {
                 } = pow;
                 const key = `${ timestamp }-${ decryptionKey }`;
                 try {
-                    // CryptoJS.AES.decrypt(encrypted, pin).toString(CryptoJS.enc.Utf8);
                     const decryptedString = CryptoJS.AES.decrypt(encryptedMessage, key).toString(CryptoJS.enc.Utf8);
                     if (decryptedString) {
                         //

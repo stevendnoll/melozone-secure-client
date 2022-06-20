@@ -88,7 +88,6 @@ const createMessagePage = (sc = null) => {
     // Secure message panel.
     html += '<h3>Secure Message</h3>';
     html += '<div id="encryptedMessage" class="encrypted-text">Please enter a message and an encryption key, then click the "Generate Secure Message" button.</div>';
-    html += '';
 
     // Render HTML.
     headerMenu(sc);
@@ -219,7 +218,6 @@ const readMessagePage = (sc = null) => {
     html += '<p>';
     html += '<a href="javascript:void(0);" id="clearMessageLink" title="Clear message from screen">Clear Message</a>';
     html += '</p>';
-    html += '';
     headerMenu(sc);
     printStr(sc.dom.nodes.body, html, false, true);
 
