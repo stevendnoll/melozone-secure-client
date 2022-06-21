@@ -179,11 +179,6 @@ html, body {
     white-space: pre-wrap;
 }
 
-.secure-client-body .hide {
-    display: none;
-    visibility: hidden;
-}
-
 .secure-client-body .required {
     color: red;
     font-size: 0.8em;
