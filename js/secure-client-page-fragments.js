@@ -1,3 +1,7 @@
+/**
+ * Page header markup.
+ * @param {*} sc
+ */
 const headerMenu = (sc = null) => {
     const menuItems = [
         {
@@ -16,7 +20,7 @@ const headerMenu = (sc = null) => {
             title: 'Read Message',
         },
     ];
-    clearInnerHTML(sc.dom.nodes.headerMenu);
+    sc.dom.nodes.headerMenu.innerHTML = '';
     menuItems.forEach((menuItem) => {
         let itemLink = '';
         if (menuItem.href !== sc.state.page) {
