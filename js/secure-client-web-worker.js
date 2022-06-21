@@ -6,7 +6,12 @@ const POW_DIFFICULTY = 4;
 const POW_PREFIX = '1111';
 const SYSTEM_SALT = '1111OnlySystemsThatShareTheSameSaltCanExchangeSecureMessages1111';
 
-// https://stackoverflow.com/questions/59777670/how-can-i-hash-a-string-with-sha256-in-js
+/**
+ * JavaScript implementation of sha256.
+ * Copied from https://stackoverflow.com/questions/59777670/how-can-i-hash-a-string-with-sha256-in-js.
+ * @param {*} ascii
+ * @returns
+ */
 var sha256 = function sha256(ascii) {
     function rightRotate(value, amount) {
         return (value>>>amount) | (value<<(32 - amount));
@@ -89,6 +94,12 @@ var sha256 = function sha256(ascii) {
     return result;
 };
 
+/**
+ * Compare a given encryptedMessage to a given proof-of-work object.
+ * @param {*} encryptedMessage
+ * @param {*} pow
+ * @returns
+ */
 const checkPOW = (encryptedMessage = '', pow = {}) => {
     if (pow) {
         const {
@@ -109,6 +120,12 @@ const checkPOW = (encryptedMessage = '', pow = {}) => {
     return false;
 };
 
+/**
+ * Create a proof-of-work hash for the given encryptedMessage.
+ * @param {*} encryptedMessage
+ * @param {*} timestamp
+ * @returns
+ */
 const createPOW = (encryptedMessage = '', timestamp = 0) => {
     let nonce = 0;
     let pow = sha256(`${ encryptedMessage }-${ SYSTEM_SALT }-${ POW_DIFFICULTY }-${ POW_PREFIX }-${ timestamp }-${ NONCE_LIMIT }-${ nonce }`);
@@ -126,6 +143,11 @@ const createPOW = (encryptedMessage = '', timestamp = 0) => {
     };
 };
 
+/**
+ * Use CryptoJS to decrypt a secure encrypted message.
+ * @param {*} cmd
+ * @param {*} data
+ */
 const decryptData = (cmd = '', data = {}) => {
     const {
         decryptionKey,
@@ -147,7 +169,6 @@ const decryptData = (cmd = '', data = {}) => {
                 try {
                     const decryptedString = CryptoJS.AES.decrypt(encryptedMessage, key).toString(CryptoJS.enc.Utf8);
                     if (decryptedString) {
-                        //
                         const decryptedData = JSON.parse(decryptedString);
                         if (decryptedData && decryptedData.timestamp && decryptedData.timestamp === timestamp) {
                             const {
@@ -189,7 +210,7 @@ const decryptData = (cmd = '', data = {}) => {
                     self.postMessage({
                         cmd,
                         data: {},
-                        message: `Message decryption failed.`,
+                        message: `Message decryption failed. This is likely due to an incorrect decryption key.`,
                         status: 500,
                     });
                 }
@@ -197,7 +218,7 @@ const decryptData = (cmd = '', data = {}) => {
                 self.postMessage({
                     cmd,
                     data: {},
-                    message: 'POW check failed.',
+                    message: 'Proof-of-work check failed. Someone has tampered with the message.',
                     status: 400,
                 });
             }
@@ -219,6 +240,11 @@ const decryptData = (cmd = '', data = {}) => {
     }
 };
 
+/**
+ * Use CryptoJS to encrypt a message.
+ * @param {*} cmd
+ * @param {*} data
+ */
 const encryptData = (cmd = '', data = {}) => {
     const {
         encryptionKey,
@@ -267,10 +293,15 @@ const encryptData = (cmd = '', data = {}) => {
     }
 };
 
+/**
+ * Web worker test method.
+ * @param {*} data
+ */
 const testMethod = (data = {}) => {
     self.postMessage({
         cmd,
         data,
+        message: 'Test message.',
         status: 200,
     });
 };

@@ -1,3 +1,9 @@
+/**
+ * Melozone Secure Client
+ *
+ * Instantiate the main sc object. Set a couple of page-level
+ * event listeners. Check the URL hash, then load a page.
+ */
 (() => {
     try {
         // Secure Client object.
@@ -17,6 +23,7 @@
                             textMessage: null,
                         },
                         nodes: {
+                            copyMessageLink: null,
                             encryptedMessage: null,
                         },
                     },
@@ -31,6 +38,7 @@
                         nodes: {
                             clearMessage: null,
                             decryptedMessage: null,
+                            pasteMessageLink: null,
                         },
                     },
                 },

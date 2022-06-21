@@ -1,3 +1,10 @@
+const DEFAULT_MESSAGE_TEXT = 'Please enter a message and an encryption key, then click the "Generate Secure Message" button.';
+const GENERATING_MESSAGE_TEXT = 'Generating secure message... This might take a few seconds.';
+
+/**
+ * The Create page.
+ * @param {*} sc
+ */
 const createMessagePage = (sc = null) => {
     const currentState = JSON.parse(JSON.stringify(sc.state.pages.create.data));
     let html = '';
@@ -87,7 +94,11 @@ const createMessagePage = (sc = null) => {
 
     // Secure message panel.
     html += '<h3>Secure Message</h3>';
-    html += '<div id="encryptedMessage" class="encrypted-text">Please enter a message and an encryption key, then click the "Generate Secure Message" button.</div>';
+    html += `<div id="encryptedMessage" class="encrypted-text">${ DEFAULT_MESSAGE_TEXT }</div>`;
+    html += '<br />';
+    html += '<div id="copyMessageDiv">';
+    html += '<a href="javascript:void(0);" id="copyMessageLink" title="Copy to Clipboard">Copy to Clipboard</a>';
+    html += '</div>';
 
     // Render HTML.
     headerMenu(sc);
@@ -100,6 +111,7 @@ const createMessagePage = (sc = null) => {
     sc.dom.forms.create.fields.messageText = document.querySelector('#messageText') || null;
     sc.dom.forms.create.fields.textMessage = document.querySelector('#textMessage') || null;
     sc.dom.forms.create.fields.noBlurMessage = document.querySelector('#noBlurMessage') || null;
+    sc.dom.forms.create.nodes.copyMessageLink = document.querySelector('#copyMessageLink') || null;
     sc.dom.forms.create.nodes.encryptedMessage = document.querySelector('#encryptedMessage') || null;
     sc.dom.forms.create.buttons.generateMessage = document.querySelector('#generateMessageButton') || null;
 
@@ -136,8 +148,39 @@ const createMessagePage = (sc = null) => {
     sc.dom.forms.create.buttons.generateMessage.addEventListener('click', () => {
         handleGenerateMessage(sc);
     });
+
+    sc.dom.forms.create.nodes.copyMessageLink.addEventListener('click', () => {
+        let html = sc.dom.forms.create.nodes.encryptedMessage.innerHTML;
+        if (html && html !== DEFAULT_MESSAGE_TEXT && html !== GENERATING_MESSAGE_TEXT) {
+            try {
+                html = html.substring(5);
+                html = html.substring(0, html.length - 6);
+                navigator.clipboard
+                .writeText(html)
+                .then(() => {
+                    // Copied to clipboard.
+                    console.log('copied');
+                    console.log(html);
+                    sc.dom.forms.create.nodes.copyMessageLink.innerHTML = 'Copied';
+                    setTimeout(() => {
+                        sc.dom.forms.create.nodes.copyMessageLink.innerHTML = 'Copy to Clipboard';
+                    }, 1000);
+                })
+                .catch(() => {
+                    console.log('Failed to copy to clipboard.');
+                });
+            } catch (err) {
+                console.log(`${ err.message }`);
+            }
+        }
+    });
 };
 
+/**
+ * A generic error page.
+ * @param {*} sc
+ * @param {*} message
+ */
 const errorPage = (sc = null, message = '') => {
     headerMenu(sc);
     let html = '';
@@ -148,6 +191,10 @@ const errorPage = (sc = null, message = '') => {
     printStr(sc.dom.nodes.body, html, false, true);
 };
 
+/**
+ * The Home page.
+ * @param {*} sc
+ */
 const homePage = (sc = null) => {
     let html = '';
     html += '<h1>Home</h1>';
@@ -172,6 +219,10 @@ const homePage = (sc = null) => {
     printStr(sc.dom.nodes.body, html, false, true);
 };
 
+/**
+ * The Read page.
+ * @param {*} sc
+ */
 const readMessagePage = (sc = null) => {
     const setButtonState = () => {
         if (sc.dom.forms.read.fields.decryptionKey.value && sc.dom.forms.read.fields.secureMessage.value) {
@@ -190,6 +241,10 @@ const readMessagePage = (sc = null) => {
     html += '<h3>Encrypted Message <span class="required">*</span></h3>';
     html += '<div class="form-row">';
     html += '<textarea id="secureMessage" name="secureMessage" class="textarea-field" title="Secure message"></textarea>';
+    html += '</div>';
+    html += '<br />';
+    html += '<div>';
+    html += '<a href="javascript:void(0);" id="pasteMessageLink" title="Paste from Clipboard">Paste from Clipboard</a>';
     html += '</div>';
 
     // Decryption key field.
@@ -215,9 +270,10 @@ const readMessagePage = (sc = null) => {
     // Secure message panel.
     html += '<h3>Secure Message</h3>';
     html += '<div id="decryptedMessage" class="decrypted-text">Please enter an encrypted message and a decryption key, then click the "View Secure Message" button.</div>';
-    html += '<p>';
+    html += '<br />';
+    html += '<div>';
     html += '<a href="javascript:void(0);" id="clearMessageLink" title="Clear message from screen">Clear Message</a>';
-    html += '</p>';
+    html += '</div>';
     headerMenu(sc);
     printStr(sc.dom.nodes.body, html, false, true);
 
@@ -226,6 +282,7 @@ const readMessagePage = (sc = null) => {
     sc.dom.forms.read.fields.secureMessage = document.querySelector('#secureMessage') || null;
     sc.dom.forms.read.nodes.clearMessage = document.querySelector('#clearMessageLink') || null;
     sc.dom.forms.read.nodes.decryptedMessage = document.querySelector('#decryptedMessage') || null;
+    sc.dom.forms.read.nodes.pasteMessageLink = document.querySelector('#pasteMessageLink') || null;
     sc.dom.forms.read.buttons.viewMessage = document.querySelector('#viewMessageButton') || null;
 
     // Event handlers.
@@ -247,8 +304,26 @@ const readMessagePage = (sc = null) => {
         html += 'Please enter an encrypted message and a decryption key, then click the "View Secure Message" button.';
         sc.dom.forms.read.nodes.decryptedMessage.innerHTML = html;
     });
+
+    sc.dom.forms.read.nodes.pasteMessageLink.addEventListener('click', () => {
+        navigator.clipboard
+            .readText()
+            .then((val) => {
+                if (val) {
+                    sc.dom.forms.read.fields.secureMessage.value = val;
+                    setButtonState();
+                }
+            })
+            .catch(() => {
+                console.log('Failed to read from clipboard.');
+            });
+    });
 };
 
+/**
+ * Loads the appropriate page.
+ * @param {*} sc
+ */
 const loadPage = (sc = null) => {
     try {
         switch (sc.state.page) {

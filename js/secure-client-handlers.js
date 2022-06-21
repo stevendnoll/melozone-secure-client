@@ -1,3 +1,9 @@
+/**
+ * Take the current values from the createSecureMessageForm form
+ * and set them to the page state. Set submit button state based
+ * on the state of the form.
+ * @param {*} sc
+ */
 const handleCreateFormEvent = (sc = null) => {
     const state = getCreatePageState(sc);
     const keys = Object.keys(state);
@@ -17,6 +23,14 @@ const handleCreateFormEvent = (sc = null) => {
     }
 };
 
+/**
+ * Handles the response of the web worker decryptData() method.
+ * Updates the DOM and re-enables the viewMessageButton button.
+ * @param {*} sc
+ * @param {*} data
+ * @param {*} status
+ * @param {*} message
+ */
 const handleDecryptedDataWorkerResponse = (sc = null, data = {}, status = 200, message = '') => {
     if (status === 200) {
         const {
@@ -49,6 +63,14 @@ const handleDecryptedDataWorkerResponse = (sc = null, data = {}, status = 200, m
     enableButton(sc.dom.forms.read.buttons.viewMessage, 'View secure message');
 };
 
+/**
+ * Handles the response of the web worker encryptData() method.
+ * Updates the DOM and re-enables the generateMessageButton button.
+ * @param {*} sc
+ * @param {*} data
+ * @param {*} status
+ * @param {*} message
+ */
 const handleEncryptedDataWorkerResponse = (sc = null, data = {}, status = 200, message = '') => {
     const {
         encryptedMessage,
@@ -71,6 +93,12 @@ const handleEncryptedDataWorkerResponse = (sc = null, data = {}, status = 200, m
     enableButton(sc.dom.forms.create.buttons.generateMessage, 'Generate secure message');
 };
 
+/**
+ * Handle when the generateMessageButton button is clicked.
+ * Calls the web worker encryptData() method.
+ * Sets the generateMessageButton button to disabled.
+ * @param {*} sc
+ */
 const handleGenerateMessage = (sc = null) => {
     sc.state.pages.create.data.timestamp = new Date().getTime();
     const currentState = getCreatePageState(sc);
@@ -101,6 +129,12 @@ const handleGenerateMessage = (sc = null) => {
     }
 };
 
+/**
+ * Handle when the viewMessageButton button is clicked.
+ * Calls the web worker decryptData() method.
+ * Sets the viewMessageButton button to disabled.
+ * @param {*} sc
+ */
 const handleViewMessage = (sc = null) => {
     const currentState = getReadPageState(sc);
     const {
@@ -125,6 +159,12 @@ const handleViewMessage = (sc = null) => {
     }
 };
 
+/**
+ * Handles all messages received from the web worker thread
+ * and routes them to the appropriate main thread method.
+ * @param {*} sc
+ * @param {*} messageData
+ */
 const handleWorkerResponse = (sc = null, messageData = {}) => {
     const {
         cmd,
