@@ -7,3 +7,7 @@ Initial source code commit.
 Code clean-up and comments.
 Misc small improvements.
 Added copy to/read from clipboard.
+
+# 0.0.3
+
+Disable console logs.

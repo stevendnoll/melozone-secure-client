@@ -182,7 +182,7 @@ const handleWorkerResponse = (sc = null, messageData = {}) => {
             handleEncryptedDataWorkerResponse(sc, data, status, message);
             break;
         default:
-            console.log(cmd, data, status);
+            // console.log(cmd, data, status);
             break;
     }
 };
