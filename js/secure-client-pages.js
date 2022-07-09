@@ -159,8 +159,6 @@ const createMessagePage = (sc = null) => {
                 .writeText(html)
                 .then(() => {
                     // Copied to clipboard.
-                    console.log('copied');
-                    console.log(html);
                     sc.dom.forms.create.nodes.copyMessageLink.innerHTML = 'Copied';
                     setTimeout(() => {
                         sc.dom.forms.create.nodes.copyMessageLink.innerHTML = 'Copy to Clipboard';
@@ -170,7 +168,7 @@ const createMessagePage = (sc = null) => {
                     console.log('Failed to copy to clipboard.');
                 });
             } catch (err) {
-                console.log(`${ err.message }`);
+                // console.log(`${ err.message }`);
             }
         }
     });
@@ -315,7 +313,7 @@ const readMessagePage = (sc = null) => {
                 }
             })
             .catch(() => {
-                console.log('Failed to read from clipboard.');
+                // console.log('Failed to read from clipboard.');
             });
     });
 };

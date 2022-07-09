@@ -92,7 +92,7 @@
         // Load page.
         loadPage(sc);
     } catch (err) {
-        console.log('Secure client exception.');
-        console.log(err);
+        // console.log('Secure client exception.');
+        // console.log(err);
     }
 })();
